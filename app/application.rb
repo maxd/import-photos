@@ -11,8 +11,6 @@ class Application
 
   def parse_args
     opts = OptionParser.new do |opts|
-      opts.banner = 'Usage: import-photos.rb [options]'
-
       opts.separator ''
       opts.separator 'Options:'
 

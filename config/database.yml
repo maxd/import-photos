@@ -1,2 +1,2 @@
 adapter: sqlite
-database: db/database.db
+database: <%= File.join(ROOT, 'db/database.db') %>

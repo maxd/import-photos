@@ -1,6 +1,9 @@
+require 'erb'
 require 'sequel'
 
-config = YAML.load_file(File.expand_path('../config/database.yml', __FILE__))
+ROOT = File.expand_path('..', __FILE__)
+
+config = YAML.load(ERB.new(File.read(File.join(ROOT, 'config/database.yml'))).result)
 DATABASE = Sequel.connect(config)
 
 namespace :db do
@@ -8,7 +11,7 @@ namespace :db do
   desc 'Migrate the database'
   task :migrate do
     Sequel.extension :migration
-    Sequel::Migrator.run(DATABASE, File.expand_path('../db/migrations', __FILE__))
+    Sequel::Migrator.run(DATABASE, File.join(ROOT, 'db/migrations'))
   end
 
 end

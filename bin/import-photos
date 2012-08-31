@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'bundler/setup'
+require 'erb'
+require 'sequel'
+
+ROOT = File.expand_path('../..', __FILE__)
+
+$: << File.join(ROOT, 'app')
+
+config = YAML.load(ERB.new(File.read(File.join(ROOT, 'config/database.yml'))).result)
+DATABASE = Sequel.connect(config)
+
+require 'application'
+Application.new.run

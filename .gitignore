@@ -1,0 +1,11 @@
+# Ignore bundler config & gems
+/vendor/bundle
+
+# Ignore the default SQLite database.
+/db/*.db
+
+# Ignore MAC OS stuff
+.DS_Store
+
+# Ignore Idea stuff
+/.idea

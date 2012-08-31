@@ -12,10 +12,10 @@ class ImportManager
   def process
     result = copy_files
 
-    puts "Imported #{result[:total_files] - result[:duplicates].length} from #{result[:total_files]} files."
+    puts "Imported #{result[:total_files] - result[:duplicate_files]} from #{result[:total_files]} files."
     puts "---"
     puts "Renamed:    #{result[:renamed_files]}"
-    puts "Duplicates: #{result[:duplicates].length} (skipped)"
+    puts "Duplicates: #{result[:duplicate_files]} (skipped)"
   end
 
 private
@@ -29,13 +29,13 @@ private
   end
 
   def copy_files
-    duplicates = []
+    duplicate_files = 0
     total_files = 0
     renamed_files = 0
 
     enumerate_files(@options[:input_dir]) do |input_file|
       if @duplicate_manager.is_duplicate?(input_file)
-        duplicates << input_file
+        duplicate_files += 1
       else
         output_dir = output_dir(input_file)
         output_file, is_renamed = rename_if_exists(output_file(input_file, output_dir))
@@ -53,7 +53,7 @@ private
       total_files += 1
     end
 
-    { duplicates: duplicates, total_files: total_files, renamed_files: renamed_files }
+    { duplicate_files: duplicate_files, total_files: total_files, renamed_files: renamed_files }
   end
 
   def output_dir(input_file)

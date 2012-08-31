@@ -57,7 +57,7 @@ private
   end
 
   def output_dir(input_file)
-    change_time = File.ctime(input_file)
+    change_time = File.mtime(input_file)
 
     relative_dir = change_time.strftime('%Y-%m-%d')
     File.join(@options[:output_dir], relative_dir)
